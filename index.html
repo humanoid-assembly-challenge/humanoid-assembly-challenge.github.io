@@ -245,6 +245,7 @@ h2.section-title .yellow-mark {
   gap: 14px;
 }
 .instr-card {
+  position: relative;
   background: var(--paper-3);
   border: 1px solid var(--blue);
   border-radius: 4px;
@@ -257,6 +258,24 @@ h2.section-title .yellow-mark {
   width: 100%; height: 100%; object-fit: contain;
   background: var(--paper);
 }
+.instr-panel[data-panel="pictures"] .instr-card { padding: 0; }
+.instr-panel[data-panel="pictures"] .instr-card img { object-fit: cover; }
+.instr-zoom {
+  position: absolute; top: 10px; right: 10px;
+  width: 34px; height: 34px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.08);
+  background: rgba(255,255,255,0.92);
+  color: var(--ink);
+  display: grid; place-items: center;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.instr-zoom:hover { background: #fff; transform: scale(1.06); }
+.instr-zoom svg { width: 16px; height: 16px; display: block; }
 .instr-caption {
   font-size: 12px; font-weight: 600;
   color: var(--ink-3); letter-spacing: 0.04em;
@@ -325,11 +344,12 @@ h2.section-title .yellow-mark {
   overflow: hidden;
 }
 .ref-still .photo {
-  aspect-ratio: 16/10;
+  aspect-ratio: 16/9;
   background: var(--paper-3);
   overflow: hidden;
 }
-.ref-still .photo img {
+.ref-still .photo img,
+.ref-still .photo video {
   width: 100%; height: 100%; object-fit: cover; display: block;
 }
 .ref-still .body {
@@ -357,6 +377,97 @@ h2.section-title .yellow-mark {
 }
 .rules-inner { max-width: 1280px; margin: 0 auto; }
 .rules-head { margin-bottom: 48px; max-width: 70ch; }
+.rules-body {
+  display: grid; grid-template-columns: 1fr;
+  gap: clamp(24px, 4vw, 48px); align-items: start;
+}
+.rules-imagery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4px;
+  background: var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+}
+.rules-imagery .frame { background: var(--paper-3); overflow: hidden; position: relative; }
+.rules-imagery .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rules-imagery .frame-num {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 11px; font-weight: 900; color: #fff;
+  letter-spacing: 0.06em; font-variant-numeric: tabular-nums;
+  padding: 5px 9px; border-radius: 999px;
+  background: rgba(15,15,20,0.72);
+  pointer-events: none;
+}
+.rules-content { min-width: 0; display: flex; flex-direction: column; gap: clamp(20px, 3vw, 28px); }
+.rules-content > .scoring-head { margin-bottom: 0; }
+.rules-lede { font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 0; }
+.rules-lede b { color: var(--ink); font-weight: 900; }
+
+.rules-conditions {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.rules-conditions li {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 13px; font-weight: 700; color: var(--ink);
+}
+.rules-conditions li::before {
+  content: ""; width: 6px; height: 6px;
+  background: var(--blue); border-radius: 50%;
+}
+
+.rules-checkpoints {
+  background: var(--paper); border: 1px solid var(--ink);
+  border-radius: 8px;
+  padding: clamp(22px, 4vw, 32px) clamp(22px, 4vw, 36px);
+}
+.rules-checkpoints .cp-eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 6px;
+}
+.rules-checkpoints h3 {
+  font-size: clamp(22px, 2.6vw, 28px); font-weight: 900;
+  letter-spacing: -0.02em; line-height: 1.1;
+  color: var(--ink); margin-bottom: 22px;
+}
+.rules-checkpoints h3 .accent { color: var(--blue); }
+.rules-checkpoints ol {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column;
+}
+.rules-checkpoints li {
+  display: grid; grid-template-columns: auto 1fr;
+  gap: clamp(14px, 2vw, 20px);
+  padding: 16px 0;
+  border-top: 1px solid var(--rule);
+  align-items: center;
+}
+.rules-checkpoints li:first-child { border-top: 0; padding-top: 4px; }
+.rules-checkpoints li:last-child { padding-bottom: 0; }
+.rules-checkpoints .cp-num {
+  font-size: clamp(30px, 4vw, 40px);
+  font-weight: 900; color: var(--blue);
+  font-variant-numeric: tabular-nums;
+  line-height: 1; letter-spacing: -0.02em;
+  min-width: 1.6em;
+}
+.rules-checkpoints .cp-name { font-weight: 900; color: var(--ink); font-size: 16px; }
+.rules-checkpoints .cp-desc { font-size: 14px; color: var(--ink-2); margin-top: 4px; line-height: 1.5; }
+
+.rules-footer {
+  margin-top: clamp(28px, 4vw, 48px);
+  display: grid; grid-template-columns: 1fr;
+  gap: 12px;
+}
 
 /* scoring — one tight block */
 .scoring-head {
@@ -433,6 +544,9 @@ h2.section-title .yellow-mark {
 }
 .rr.fail { background: #fdecec; border-left-color: #d23b3b; }
 .rr.penalty { background: var(--yellow-soft); border-left-color: #c79900; }
+.rr.time { background: #eaf3ff; border-left-color: var(--blue); }
+.rr.time .glyph { background: var(--blue); }
+.rr.time .label { color: var(--blue); }
 .rr .glyph {
   width: 28px; height: 28px;
   display: grid; place-items: center;
@@ -807,6 +921,9 @@ footer {
   .scoring-cards { grid-template-columns: repeat(3, 1fr); }
   .scoring-cards .sc-card:first-child { grid-column: auto; }
   .run-rules { grid-template-columns: 1fr 1fr; }
+  .rules-body { grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 4vw, 56px); }
+  .rules-imagery { aspect-ratio: 4 / 5; position: sticky; top: 32px; }
+  .rules-footer { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .resources-grid { grid-template-columns: repeat(3, 1fr); }
   .team-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
   .partners-grid { grid-template-columns: repeat(3, 1fr); }
@@ -814,6 +931,34 @@ footer {
   .register-card { grid-template-columns: 1.3fr 1fr; }
   .footer-inner { grid-template-columns: 1.6fr 1fr 1fr; }
 }
+
+/* ============ LIGHTBOX ============ */
+.lightbox {
+  position: fixed; inset: 0;
+  background: rgba(15, 15, 20, 0.92);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  padding: clamp(16px, 4vw, 48px);
+}
+.lightbox.is-open { display: flex; }
+.lightbox img {
+  max-width: 100%; max-height: 100%;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.lightbox-close {
+  position: absolute; top: 18px; right: 18px;
+  width: 40px; height: 40px;
+  border-radius: 999px; border: 0;
+  background: rgba(255,255,255,0.95); color: var(--ink);
+  display: grid; place-items: center;
+  cursor: pointer; font-size: 18px; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+.lightbox-close:hover { background: #fff; }
+body.lightbox-open { overflow: hidden; }
 </style>
 </head>
 
@@ -896,9 +1041,19 @@ footer {
               <div class="instr-card"><img src="assets/stills/utter-1.jpg" alt="UTTER assembly instruction sheet 1"></div>
               <div class="instr-card"><img src="assets/stills/utter-2.jpg" alt="UTTER assembly instruction sheet 2"></div>
             </div>
-            <div class="instr-pair instr-panel instr-stack is-hidden" data-panel="pictures">
-              <div class="instr-card"><img src="assets/stills/utter-pic-1.jpg" alt="UTTER table — real photo 1"></div>
-              <div class="instr-card"><img src="assets/stills/utter-pic-2.jpg" alt="UTTER table — real photo 2"></div>
+            <div class="instr-pair instr-panel is-hidden" data-panel="pictures">
+              <div class="instr-card">
+                <img src="assets/stills/utter-pic-1.jpg" alt="UTTER table — real photo 1">
+                <button type="button" class="instr-zoom" aria-label="Zoom photo" data-fullsrc="assets/stills/utter-pic-1.jpg" data-fullalt="UTTER table — real photo 1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                </button>
+              </div>
+              <div class="instr-card">
+                <img src="assets/stills/utter-pic-2.jpg" alt="UTTER table — real photo 2">
+                <button type="button" class="instr-zoom" aria-label="Zoom photo" data-fullsrc="assets/stills/utter-pic-2.jpg" data-fullalt="UTTER table — real photo 2">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+                </button>
+              </div>
             </div>
           </div>
           <div class="instr-caption">Official IKEA UTTER · <a href="https://www.ikea.com/us/en/p/utter-childrens-table-indoor-outdoor-white-60357737/" target="_blank" rel="noopener">view on ikea.com →</a></div>
@@ -916,19 +1071,16 @@ footer {
         <div class="row"><span class="k">Robot</span><span class="v blue">Unitree G1 · 1.32 m</span></div>
         <div class="row"><span class="k">Run mode</span><span class="v">Autonomous</span></div>
         <div class="row"><span class="k">Intervention</span><span class="v">Score penalty</span></div>
-        <div class="yellow-flag">
-          <strong>Single scene</strong> this edition — shipped to teams ahead, identical on the venue floor.
-        </div>
       </aside>
     </div>
 
     <aside class="ref-still">
       <div class="photo">
-        <img src="assets/stills/table_hero.jpg" alt="UTTER table assembled by Unitree G1">
+        <video src="assets/videos/assemble-vs-human-4x.mp4" autoplay muted loop playsinline></video>
       </div>
       <div class="body">
-        <h4>Assembled state</h4>
-        <p>What success looks like on the venue floor — same parts, same fit, every team, every run.</p>
+        <h4>Challenge against expert human benchmark</h4>
+        <p>Every robot run is judged against a human reference run on the same parts, same scene — outcome and time.</p>
       </div>
     </aside>
   </div>
@@ -941,38 +1093,67 @@ footer {
       <h2 class="section-title">Challenge Rules</h2>
     </div>
 
-    <div class="scoring-head">
-      <h3>Scoring</h3>
+    <div class="rules-body">
+      <aside class="rules-imagery" aria-hidden="true">
+        <div class="frame"><span class="frame-num">01</span><img src="assets/stills/table_setup.jpg" alt=""></div>
+        <div class="frame"><span class="frame-num">02</span><img src="assets/stills/table_action.jpg" alt=""></div>
+        <div class="frame"><span class="frame-num">03</span><img src="assets/stills/table_legs.jpg" alt=""></div>
+        <div class="frame"><span class="frame-num">04</span><img src="assets/stills/table_flip.jpg" alt=""></div>
+      </aside>
+
+      <div class="rules-content">
+        <div class="scoring-head">
+          <h3>Scoring</h3>
+        </div>
+
+        <p class="rules-lede">Every robot run is judged on <b>outcome and time</b>, against a human reference run on the same parts and scene.</p>
+
+        <ul class="rules-conditions">
+          <li>1 autonomous run</li>
+          <li>Single shared scene</li>
+          <li>Same parts</li>
+          <li>Venue floor</li>
+        </ul>
+
+        <div class="rules-checkpoints">
+          <div class="cp-eyebrow">Outcome</div>
+          <h3>3 checkpoints — <span class="accent">pass or fail</span></h3>
+          <ol>
+            <li>
+              <span class="cp-num">01</span>
+              <div>
+                <div class="cp-name">Inventory</div>
+                <div class="cp-desc">Parts identified and staged.</div>
+              </div>
+            </li>
+            <li>
+              <span class="cp-num">02</span>
+              <div>
+                <div class="cp-name">Partial</div>
+                <div class="cp-desc">Legs attached to the top.</div>
+              </div>
+            </li>
+            <li>
+              <span class="cp-num">03</span>
+              <div>
+                <div class="cp-name">Final</div>
+                <div class="cp-desc">Table assembled per IKEA spec.</div>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+      </div>
     </div>
 
-    <div class="scoring-cards">
-      <div class="sc-card">
-        <div class="eyebrow">01<span class="sep">·</span>Conditions</div>
-        <h4>Same setup, <span class="accent">every team</span></h4>
-        <ul class="gates-list bullets">
-          <li><span class="n">●</span><span class="name">1 autonomous run</span></li>
-          <li><span class="n">●</span><span class="name">Single shared scene</span></li>
-          <li><span class="n">●</span><span class="name">Same parts</span></li>
-          <li><span class="n">●</span><span class="name">Judged on the venue floor</span></li>
-        </ul>
+    <div class="rules-footer">
+      <div class="rr time" role="note">
+        <div class="glyph" aria-hidden="true">⏱</div>
+        <div>
+          <span class="label">Time</span>
+          <p>Wall-clock from start to the last checkpoint reached. <b>Faster successful runs rank higher.</b></p>
+        </div>
       </div>
-      <div class="sc-card">
-        <div class="eyebrow">02<span class="sep">·</span>Outcome</div>
-        <h4>3 checkpoints, <span class="accent">pass or fail</span></h4>
-        <ul class="gates-list">
-          <li><span class="n">01</span><span><span class="name">Inventory</span> — parts identified and staged</span></li>
-          <li><span class="n">02</span><span><span class="name">Partial</span> — legs attached to the top</span></li>
-          <li><span class="n">03</span><span><span class="name">Final</span> — table assembled per IKEA spec</span></li>
-        </ul>
-      </div>
-      <div class="sc-card">
-        <div class="eyebrow">03<span class="sep">·</span>Time</div>
-        <h4>Time to <span class="accent">complete</span></h4>
-        <p class="body">Wall-clock from start to the last checkpoint the robot reaches. <b>Faster successful runs rank higher.</b></p>
-      </div>
-    </div>
-
-    <div class="run-rules">
       <div class="rr fail" role="note">
         <div class="glyph" aria-hidden="true">!</div>
         <div>
@@ -995,7 +1176,7 @@ footer {
 <section class="resources" id="resources">
   <div class="resources-inner">
     <h2 class="section-title">Resources</h2>
-    <p class="section-lede">Three resources released ahead of the venue: a real-world dataset, a high-fidelity simulation environment, and remote-lab access for policies that need real-robot validation.</p>
+    <p class="section-lede">Three resources released before the event: a real-world dataset, a high-fidelity simulation environment, and remote-lab access for policies that need real-robot validation.</p>
 
     <div class="resources-grid">
       <article class="res-card">
@@ -1024,19 +1205,19 @@ footer {
         <div class="body">
           <h3>Simulation</h3>
           <div class="subtitle">G1 + UTTER scene · standardized</div>
-          <p>A high-fidelity simulation environment identical to the venue setup. Train policies, iterate on contact-rich behaviors, and evaluate against the same scoring hooks used on the floor.</p>
+          <p>A high-fidelity simulation environment identical to the venue setup. Train policies, iterate on contact-rich behaviors, and evaluate against the same Inventory · Partial · Final checkpoints used on the floor.</p>
           <ul>
             <li>Unitree G1 model</li>
             <li>UTTER parts physics</li>
             <li>Scene + lighting matched to venue</li>
-            <li>Inventory · Partial · Final scoring hooks</li>
+            <li>Inventory · Partial · Final checkpoints</li>
           </ul>
         </div>
       </article>
 
       <article class="res-card">
         <div class="media">
-          <video src="assets/videos/realworld-eval.mp4" poster="assets/videos/realworld-eval-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+          <video src="assets/videos/realworld-eval-2x.mp4" autoplay muted loop playsinline></video>
         </div>
         <div class="body">
           <h3>Real-world eval</h3>
@@ -1143,11 +1324,11 @@ footer {
       </details>
       <details class="faq-item">
         <summary class="faq-q"><span>Can we use the released dataset for training?</span><span class="plus"></span></summary>
-        <div class="faq-a">Yes. The 300+ episode dataset is provided for training and policy bootstrapping. The simulation environment is the reference for sim-side iteration; both ship ahead of the event.</div>
+        <div class="faq-a">Yes. The 300+ episode dataset is provided for training and policy bootstrapping. The simulation environment is the reference for sim-side iteration; both are released before the event.</div>
       </details>
       <details class="faq-item">
         <summary class="faq-q"><span>Is the scene revealed before the event?</span><span class="plus"></span></summary>
-        <div class="faq-a">Yes. This edition uses a single shared scene that ships in sim months ahead and arrives identically on the venue floor — same surface, same parts, same layout.</div>
+        <div class="faq-a">Yes. The same shared scene is available in simulation before the event and used on the venue floor — same surface, same parts, same layout.</div>
       </details>
     </div>
   </div>
@@ -1216,6 +1397,11 @@ footer {
   </div>
 </footer>
 
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
 <script>
   document.querySelectorAll('.instr-tab').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -1224,6 +1410,32 @@ footer {
       document.querySelectorAll('.instr-panel').forEach(p => p.classList.toggle('is-hidden', p.dataset.panel !== target));
     });
   });
+
+  (function() {
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbClose = document.getElementById('lightbox-close');
+    function open(src, alt) {
+      lbImg.src = src;
+      lbImg.alt = alt || '';
+      lb.classList.add('is-open');
+      document.body.classList.add('lightbox-open');
+    }
+    function close() {
+      lb.classList.remove('is-open');
+      document.body.classList.remove('lightbox-open');
+      lbImg.src = '';
+    }
+    document.querySelectorAll('.instr-zoom').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        open(btn.dataset.fullsrc, btn.dataset.fullalt);
+      });
+    });
+    lbClose.addEventListener('click', close);
+    lb.addEventListener('click', e => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('is-open')) close(); });
+  })();
 </script>
 </body>
 </html>
