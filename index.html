@@ -377,32 +377,14 @@ h2.section-title .yellow-mark {
 }
 .rules-inner { max-width: 1280px; margin: 0 auto; }
 .rules-head { margin-bottom: 48px; max-width: 70ch; }
-.rules-body {
-  display: grid; grid-template-columns: 1fr;
-  gap: clamp(24px, 4vw, 48px); align-items: start;
-}
-.rules-imagery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 4px;
-  background: var(--ink);
-  border-radius: 8px;
-  overflow: hidden;
-  aspect-ratio: 1 / 1;
-}
-.rules-imagery .frame { background: var(--paper-3); overflow: hidden; position: relative; }
-.rules-imagery .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rules-imagery .frame-num {
-  position: absolute; top: 10px; right: 10px;
-  font-size: 11px; font-weight: 900; color: #fff;
-  letter-spacing: 0.06em; font-variant-numeric: tabular-nums;
-  padding: 5px 9px; border-radius: 999px;
-  background: rgba(15,15,20,0.72);
-  pointer-events: none;
-}
 .rules-content { min-width: 0; display: flex; flex-direction: column; gap: clamp(20px, 3vw, 28px); }
 .rules-content > .scoring-head { margin-bottom: 0; }
+.rules-intro { display: flex; flex-direction: column; gap: 8px; }
+.rules-eyebrow {
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--blue);
+}
 .rules-lede { font-size: 16px; line-height: 1.55; color: var(--ink-2); margin: 0; }
 .rules-lede b { color: var(--ink); font-weight: 900; }
 
@@ -423,45 +405,50 @@ h2.section-title .yellow-mark {
   background: var(--blue); border-radius: 50%;
 }
 
-.rules-checkpoints {
-  background: var(--paper); border: 1px solid var(--ink);
-  border-radius: 8px;
-  padding: clamp(22px, 4vw, 32px) clamp(22px, 4vw, 36px);
-}
-.rules-checkpoints .cp-eyebrow {
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-3);
-  margin-bottom: 6px;
-}
-.rules-checkpoints h3 {
-  font-size: clamp(22px, 2.6vw, 28px); font-weight: 900;
-  letter-spacing: -0.02em; line-height: 1.1;
-  color: var(--ink); margin-bottom: 22px;
-}
-.rules-checkpoints h3 .accent { color: var(--blue); }
-.rules-checkpoints ol {
+.rules-storyboard {
   list-style: none; padding: 0; margin: 0;
+  display: grid; grid-template-columns: 1fr; gap: 14px;
+}
+.step-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--ink-4);
+  border-radius: 8px;
+  overflow: hidden;
   display: flex; flex-direction: column;
 }
-.rules-checkpoints li {
-  display: grid; grid-template-columns: auto 1fr;
-  gap: clamp(14px, 2vw, 20px);
-  padding: 16px 0;
-  border-top: 1px solid var(--rule);
-  align-items: center;
+.step-card.is-checkpoint { border-top-color: var(--blue); }
+.step-photo {
+  aspect-ratio: 4 / 3;
+  background: var(--paper-3);
+  overflow: hidden;
 }
-.rules-checkpoints li:first-child { border-top: 0; padding-top: 4px; }
-.rules-checkpoints li:last-child { padding-bottom: 0; }
-.rules-checkpoints .cp-num {
-  font-size: clamp(30px, 4vw, 40px);
-  font-weight: 900; color: var(--blue);
+.step-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.step-body {
+  padding: 16px 18px 20px;
+  display: flex; flex-direction: column; gap: 6px;
+  flex: 1;
+}
+.step-eyebrow {
+  font-size: 11px; font-weight: 800;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-3);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.step-eyebrow .n {
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
-  line-height: 1; letter-spacing: -0.02em;
-  min-width: 1.6em;
+  background: var(--paper-3);
+  padding: 2px 7px; border-radius: 4px;
 }
-.rules-checkpoints .cp-name { font-weight: 900; color: var(--ink); font-size: 16px; }
-.rules-checkpoints .cp-desc { font-size: 14px; color: var(--ink-2); margin-top: 4px; line-height: 1.5; }
+.is-checkpoint .step-eyebrow { color: var(--blue); }
+.is-checkpoint .step-eyebrow .n { color: #fff; background: var(--blue); }
+.step-name {
+  font-size: 17px; font-weight: 900;
+  letter-spacing: -0.015em; color: var(--ink);
+  margin-top: 2px;
+}
+.step-desc { font-size: 13px; line-height: 1.5; color: var(--ink-2); }
 
 .rules-footer {
   margin-top: clamp(28px, 4vw, 48px);
@@ -901,6 +888,7 @@ footer {
   .brand-text .light { display: inline; }
   .scoring-cards { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .scoring-cards .sc-card:first-child { grid-column: 1 / -1; }
+  .rules-storyboard { grid-template-columns: repeat(2, 1fr); }
   .resources-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .team-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
   .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -921,8 +909,7 @@ footer {
   .scoring-cards { grid-template-columns: repeat(3, 1fr); }
   .scoring-cards .sc-card:first-child { grid-column: auto; }
   .run-rules { grid-template-columns: 1fr 1fr; }
-  .rules-body { grid-template-columns: 0.9fr 1.1fr; gap: clamp(32px, 4vw, 56px); }
-  .rules-imagery { aspect-ratio: 4 / 5; position: sticky; top: 32px; }
+  .rules-storyboard { grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .rules-footer { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .resources-grid { grid-template-columns: repeat(3, 1fr); }
   .team-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -1093,57 +1080,54 @@ body.lightbox-open { overflow: hidden; }
       <h2 class="section-title">Challenge Rules</h2>
     </div>
 
-    <div class="rules-body">
-      <aside class="rules-imagery" aria-hidden="true">
-        <div class="frame"><span class="frame-num">01</span><img src="assets/stills/table_setup.jpg" alt=""></div>
-        <div class="frame"><span class="frame-num">02</span><img src="assets/stills/table_action.jpg" alt=""></div>
-        <div class="frame"><span class="frame-num">03</span><img src="assets/stills/table_legs.jpg" alt=""></div>
-        <div class="frame"><span class="frame-num">04</span><img src="assets/stills/table_flip.jpg" alt=""></div>
-      </aside>
-
-      <div class="rules-content">
-        <div class="scoring-head">
-          <h3>Scoring</h3>
-        </div>
-
-        <p class="rules-lede">Every robot run is judged on <b>outcome and time</b>, against a human reference run on the same parts and scene.</p>
-
-        <ul class="rules-conditions">
-          <li>1 autonomous run</li>
-          <li>Single shared scene</li>
-          <li>Same parts</li>
-          <li>Venue floor</li>
-        </ul>
-
-        <div class="rules-checkpoints">
-          <div class="cp-eyebrow">Outcome</div>
-          <h3>3 checkpoints — <span class="accent">pass or fail</span></h3>
-          <ol>
-            <li>
-              <span class="cp-num">01</span>
-              <div>
-                <div class="cp-name">Inventory</div>
-                <div class="cp-desc">Parts identified and staged.</div>
-              </div>
-            </li>
-            <li>
-              <span class="cp-num">02</span>
-              <div>
-                <div class="cp-name">Partial</div>
-                <div class="cp-desc">Legs attached to the top.</div>
-              </div>
-            </li>
-            <li>
-              <span class="cp-num">03</span>
-              <div>
-                <div class="cp-name">Final</div>
-                <div class="cp-desc">Table assembled per IKEA spec.</div>
-              </div>
-            </li>
-          </ol>
-        </div>
-
+    <div class="rules-content">
+      <div class="scoring-head">
+        <h3>Scoring</h3>
       </div>
+
+      <p class="rules-lede">Teams compete on the <b>AI policy</b> driving the G1 — no teleop, no human steering. Each run is judged on <b>outcome and time</b>, against a human reference run on the same parts and scene.</p>
+
+      <ul class="rules-conditions">
+        <li>1 autonomous run</li>
+        <li>Single shared scene</li>
+        <li>Same parts</li>
+        <li>Venue floor</li>
+      </ul>
+
+      <ol class="rules-storyboard">
+        <li class="step-card">
+          <div class="step-photo"><img src="assets/stills/table_setup.jpg" alt="Parts laid out before assembly"></div>
+          <div class="step-body">
+            <div class="step-eyebrow"><span class="n">00</span>Initial state</div>
+            <div class="step-name">Initial</div>
+            <div class="step-desc">Parts laid out, ready to begin.</div>
+          </div>
+        </li>
+        <li class="step-card is-checkpoint">
+          <div class="step-photo"><img src="assets/stills/table_action.jpg" alt="Robot identifying parts"></div>
+          <div class="step-body">
+            <div class="step-eyebrow"><span class="n">01</span>Checkpoint</div>
+            <div class="step-name">Inventory</div>
+            <div class="step-desc">Parts identified and staged.</div>
+          </div>
+        </li>
+        <li class="step-card is-checkpoint">
+          <div class="step-photo"><img src="assets/stills/table_legs.jpg" alt="Legs attached to the top"></div>
+          <div class="step-body">
+            <div class="step-eyebrow"><span class="n">02</span>Checkpoint</div>
+            <div class="step-name">Partial</div>
+            <div class="step-desc">Legs attached to the top.</div>
+          </div>
+        </li>
+        <li class="step-card is-checkpoint">
+          <div class="step-photo"><img src="assets/stills/table_hero.jpg" alt="Table fully assembled"></div>
+          <div class="step-body">
+            <div class="step-eyebrow"><span class="n">03</span>Checkpoint</div>
+            <div class="step-name">Final</div>
+            <div class="step-desc">Table assembled per IKEA spec.</div>
+          </div>
+        </li>
+      </ol>
     </div>
 
     <div class="rules-footer">
